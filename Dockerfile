@@ -1,20 +1,14 @@
-# Use an official Python runtime as the base image
-FROM python:3.9-slim
+# Use the official Python 3.10.9 image
+FROM python:3.10.9
 
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the requirements file into the container
-COPY requirements.txt .
-
-# Install the required packages
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code into the container
+# Copy the current directory contents into the container at .
 COPY . .
 
-# Expose the port that the app will run on
-EXPOSE 7860
+# Set the working directory to /
+WORKDIR /
 
-# Command to run the application
-CMD ["python", "main.py"]
+# Install requirements.txt 
+RUN pip install --no-cache-dir --upgrade -r /requirements.txt
+
+# Start the FastAPI app on port 7860, the default port expected by Spaces
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
