@@ -5,6 +5,7 @@ import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
@@ -14,10 +15,8 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-
-
 # Load pre-trained model and tokenizer
-model_name = "distilgpt2"
+model_name = "microsoft/DialoGPT-medium"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 chatbot = pipeline("text-generation", model=model, tokenizer=tokenizer)
